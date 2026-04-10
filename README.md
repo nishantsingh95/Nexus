@@ -35,7 +35,7 @@ npm install
 ### 2. Environment Variables
 In the `backend` folder, create a `.env` file with the following variable (using your MongoDB URL with properly URL-encoded password if it contains special characters like `@` -> `%40`):
 ```env
-MONGO_URI="mongodb+srv://nishantsingh8195_db_user:Nish%40nt995@cluster0.wp8c2ri.mongodb.net/internshiptask"
+MONGO_URI="xyz"
 PORT=5000
 ```
 
