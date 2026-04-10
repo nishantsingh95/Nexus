@@ -13,6 +13,17 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSyncing, setIsSyncing] = useState(false);
   const [error, setError] = useState(null);
+  const [expandedPosts, setExpandedPosts] = useState(new Set());
+
+  const toggleExpand = (id) => {
+    const newSet = new Set(expandedPosts);
+    if (newSet.has(id)) {
+      newSet.delete(id);
+    } else {
+      newSet.add(id);
+    }
+    setExpandedPosts(newSet);
+  };
 
   // Initialize and load default posts
   useEffect(() => {
@@ -180,12 +191,13 @@ function App() {
                   exit={{ opacity: 0, scale: 0.9 }}
                 >
                   <span className="post-id-badge">ID: {post.id}</span>
-                  <h3 className="post-title">{post.title}</h3>
-                  <p className="post-body">{post.body}</p>
+                  <h3 className="post-title" style={expandedPosts.has(post._id || post.id) ? { WebkitLineClamp: 'unset' } : {}}>{post.title}</h3>
+                  <p className="post-body" style={expandedPosts.has(post._id || post.id) ? { WebkitLineClamp: 'unset' } : {}}>{post.body}</p>
                   
                   <div className="post-meta">
                     <span>User ID: {post.userId}</span>
                     <motion.button 
+                      onClick={() => toggleExpand(post._id || post.id)}
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
                       style={{ 
@@ -197,7 +209,15 @@ function App() {
                         alignItems: 'center'
                       }}
                     >
-                      Read more <ChevronRight size={16} />
+                      {expandedPosts.has(post._id || post.id) ? 'Show less' : 'Read more'} 
+                      <ChevronRight 
+                        size={16} 
+                        style={{ 
+                          transform: expandedPosts.has(post._id || post.id) ? 'rotate(-90deg)' : 'none', 
+                          transition: 'transform 0.2s',
+                          marginLeft: '4px'
+                        }} 
+                      />
                     </motion.button>
                   </div>
                 </motion.div>
