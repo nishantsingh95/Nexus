@@ -4,7 +4,7 @@ import { io } from 'socket.io-client';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, DownloadCloud, Activity, Database, ChevronRight } from 'lucide-react';
 
-const SOCKET_URL = import.meta.env.PROD ? 'https://your-backend-url.com' : 'http://localhost:5000';
+const SOCKET_URL = 'https://nexus-q8su.onrender.com';
 const socket = io(SOCKET_URL, { transports: ['websocket'] });
 
 function App() {
@@ -47,7 +47,7 @@ function App() {
   const fetchPosts = async () => {
     try {
       setIsLoading(true);
-      const res = await axios.get('http://localhost:5000/api/posts');
+      const res = await axios.get('https://nexus-q8su.onrender.com/api/posts');
       setPosts(res.data);
       setError(null);
     } catch (err) {
@@ -62,7 +62,7 @@ function App() {
     try {
       setIsSyncing(true);
       setError(null);
-      const res = await axios.post('http://localhost:5000/api/posts/sync');
+      const res = await axios.post('https://nexus-q8su.onrender.com/api/posts/sync');
       setPosts(res.data.posts);
       setSearchQuery(''); // clear search
     } catch (err) {
